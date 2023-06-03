@@ -6,6 +6,7 @@ const LitteSpan = ({ title, id, real,check }) => {
   const [progress, setProgress] = useState(0);
   const ref = useRef();
   const scroll = useSelector((state) => state.scroll.scroll);
+  const curr = useSelector((state) => state.scroll.curr);
   useEffect(() => {
     const delay=check?100:0;
     setTimeout(() => {
@@ -29,9 +30,9 @@ const LitteSpan = ({ title, id, real,check }) => {
   }, [scroll]);
   return (
     <div
-      className="text-[#fff]"
       ref={ref}
       style={{
+        color:curr===2?"#000":"#fff",
         transitionDuration: "0.7s",
         // transform: `rotateX(${progress * 360}deg)`,
         transform: `rotateX(${progress}deg)`,
