@@ -110,26 +110,25 @@ const TextCarousel = () => {
       console.log(scrolled);
       if (direct.current === true) {
         if (scrolled < 3 * margin && scrolled > margin) {
-          if (!(scrolled < 3 * margin && scrolled > margin * 2)) {
-            console.log("ascend left");
-            setCheck(false);
-            const tl = gsap.timeline();
-            const distLeft = w - scrolled;
-            tl.to(ref.current, {
-              x: -w,
-              duration: 1.5,
-              onUpdate: () => {
-                const prog = tl.progress() * distLeft;
-                console.log(prog);
-                dispatch(setScroll(-(scrolled + prog)));
-              },
-              onComplete: () => {
-                setCheck(true);
-                scrollRef.current = -w;
-              },
-            });
-          }
-        } else if (scrolled > margin + w && scrolled < w + margin * 2) {
+          // if (!(scrolled < 3 * margin && scrolled > margin * 2)) {
+          console.log("ascend left");
+          setCheck(false);
+          const tl = gsap.timeline();
+          const distLeft = w - scrolled;
+          tl.to(ref.current, {
+            x: -w,
+            duration: 1.5,
+            onUpdate: () => {
+              const prog = tl.progress() * distLeft;
+              console.log(prog);
+              dispatch(setScroll(-(scrolled + prog)));
+            },
+            onComplete: () => {
+              setCheck(true);
+              scrollRef.current = -w;
+            },
+          });
+        } else if (scrolled > margin + w && scrolled < w + margin * 3) {
           console.log("second ascend left");
           console.log("ascend left");
           setCheck(false);
@@ -146,6 +145,42 @@ const TextCarousel = () => {
             onComplete: () => {
               setCheck(true);
               scrollRef.current = -w * 2;
+            },
+          });
+        }
+      } else {
+        if (scrolled < w + margin && scrolled > w - margin) {
+          setCheck(false);
+          const tl = gsap.timeline();
+          const distLeft = scrolled;
+          tl.to(ref.current, {
+            x: 0,
+            duration: 1.5,
+            onUpdate: () => {
+              const prog = (1 - tl.progress()) * distLeft;
+              console.log(prog);
+              dispatch(setScroll(-prog));
+            },
+            onComplete: () => {
+              setCheck(true);
+              scrollRef.current = 0;
+            },
+          });
+        } else if (scrolled < w * 2 + margin && scrolled > w * 2 - margin) {
+          setCheck(false);
+          const tl = gsap.timeline();
+          const distLeft = w - scrolled;
+          tl.to(ref.current, {
+            x: -w,
+            duration: 1.5,
+            onUpdate: () => {
+              const prog = (1 - tl.progress()) * distLeft;
+              console.log(prog);
+              dispatch(setScroll(-prog));
+            },
+            onComplete: () => {
+              setCheck(true);
+              scrollRef.current = -w;
             },
           });
         }
