@@ -1,7 +1,7 @@
 import { gsap } from "gsap";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setDirection, setScroll } from "../../services/scroll";
+import { setCurr, setDirection, setScroll } from "../../services/scroll";
 import { Tween } from "react-gsap";
 import LittleSpan from "./item";
 import { Power4 } from "gsap";
@@ -111,6 +111,7 @@ const TextCarousel = () => {
       if (direct.current === true) {
         if (scrolled < 3 * margin && scrolled > margin) {
           // if (!(scrolled < 3 * margin && scrolled > margin * 2)) {
+
           console.log("ascend left");
           setCheck(false);
           const tl = gsap.timeline();
@@ -128,6 +129,7 @@ const TextCarousel = () => {
               scrollRef.current = -w;
             },
           });
+          dispatch(setCurr(1));
         } else if (scrolled > margin + w && scrolled < w + margin * 3) {
           console.log("second ascend left");
           console.log("ascend left");
@@ -147,6 +149,7 @@ const TextCarousel = () => {
               scrollRef.current = -w * 2;
             },
           });
+          dispatch(setCurr(2));
         }
       } else {
         if (scrolled < w + margin && scrolled > w - margin) {
@@ -166,6 +169,7 @@ const TextCarousel = () => {
               scrollRef.current = 0;
             },
           });
+          dispatch(setCurr(0));
         } else if (scrolled < w * 2 + margin && scrolled > w * 2 - margin) {
           setCheck(false);
           const tl = gsap.timeline();
@@ -183,6 +187,7 @@ const TextCarousel = () => {
               scrollRef.current = -w;
             },
           });
+          dispatch(setCurr(1));
         }
       }
     };
@@ -213,4 +218,4 @@ const TextCarousel = () => {
   );
 };
 
-export default TextCarousel;
+export default React.memo(TextCarousel);
