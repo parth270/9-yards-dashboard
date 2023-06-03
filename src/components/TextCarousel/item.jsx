@@ -10,7 +10,7 @@ const LitteSpan = ({ title, id, real }) => {
     setTimeout(() => {
       const rect = ref.current.getBoundingClientRect().x;
       const w = window.innerWidth;
-      const margin = (w * 25) / 100;
+      const margin = (w * 30) / 100;
       const lMargin = margin;
       const rMargin = w - margin;
 
@@ -24,7 +24,7 @@ const LitteSpan = ({ title, id, real }) => {
       } else {
         setProgress(0);
       }
-    }, 200);
+    }, 100);
   }, [scroll]);
   return (
     <div

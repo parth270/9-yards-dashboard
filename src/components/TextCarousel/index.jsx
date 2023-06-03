@@ -49,7 +49,7 @@ const TextItem = ({ title, id }) => {
 };
 
 const TextCarousel = () => {
-  const arr = ["Hello World-1", "Hello World-2", "Hello World-3"];
+  const arr = ["ABOUT", "THE COMPANY", "360 INTEGRATION "];
   const scrollRef = useRef(0);
   const ref = useRef();
   const dispatch = useDispatch();
@@ -65,7 +65,7 @@ const TextCarousel = () => {
         }
         gsap.to(ref.current, {
           x: make,
-          duration: 0.2,
+          duration: 0.1,
         });
         scrollRef.current = make;
         dispatch(setScroll(make));
@@ -82,7 +82,7 @@ const TextCarousel = () => {
         const tl = gsap.timeline();
         tl.to(ref.current, {
           x: make,
-          duration: 0.2,
+          duration: 0.1,
           onUpdate: () => {},
         });
         dispatch(setScroll(make));
