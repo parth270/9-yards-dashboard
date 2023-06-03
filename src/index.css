@@ -1,6 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
+
+.fckin {
+  font-family: "Space Grotesk", sans-serif;
+}
+
+.scroll-bar-cool::-webkit-scrollbar {
+  width: 10px;
+  background-color: #ccc;
+}
+
+.scroll-bar-cool::-webkit-scrollbar-thumb {
+  background-color: #f17238;
+  border-radius: 12px;
+}
+
 
 body {
   margin: 0;
