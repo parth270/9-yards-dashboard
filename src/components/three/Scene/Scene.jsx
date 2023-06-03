@@ -16,6 +16,7 @@ const Scene = () => {
   useFrame(() => {
     ref1.current.rotation.y += 0.01;
     ref2.current.rotation.y += 0.01;
+    ref3.current.rotation.y += 0.01;
   });
 
   const curr = useSelector((state) => state.scroll.curr);
@@ -53,7 +54,9 @@ const Scene = () => {
       <Environment files="https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/industrial_workshop_foundry_1k.hdr" />
       <group position={[realcurr === 0 ? 0 : 10, 0, 0]}>
         <animated.group ref={ref1} position={position1} scale={scale1}>
-          <primitive object={scene} />
+          <primitive object={scene}>
+            <meshBasicMaterial transparent opacity={0.5} />
+          </primitive>ś
         </animated.group>
       </group>
       <group position={[realcurr === 1 ? 0 : 10, 0, 0]}>
@@ -62,7 +65,7 @@ const Scene = () => {
         </animated.group>
       </group>
       <group position={[realcurr === 2 ? 0 : 10, 0, 0]}>
-        <animated.group ref={ref2} position={position3} scale={scale3}>
+        <animated.group ref={ref3} position={position3} scale={scale3}>
           <primitive object={scene2} />
         </animated.group>
       </group>

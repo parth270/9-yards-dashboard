@@ -2,9 +2,11 @@ import React from "react";
 import TextCarousel from "../components/TextCarousel";
 import CanvasContainer from "../components/three";
 import { useSelector } from "react-redux";
+import Overlay from "../components/overlay";
 
 const HomePage = () => {
   const curr = useSelector((state) => state.scroll.curr);
+  const blur = useSelector((state) => state.scroll.blur);
 
   const bgs = ["#bfbfbf", "#0000ff", "rgb(95 140 255)"];
   return (
@@ -16,6 +18,7 @@ const HomePage = () => {
     >
       <CanvasContainer>
         <TextCarousel />
+        {blur && <Overlay />}
       </CanvasContainer>
     </div>
   );
