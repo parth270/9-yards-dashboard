@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-const HomePage = React.lazy(()=>import("../views/home.jsx"))
+const HomePage = React.lazy(() => import("../views/home.jsx"));
 
 const HomeRoute = () => {
   return (
