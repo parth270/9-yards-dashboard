@@ -3,58 +3,43 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setDirection, setScroll } from "../../services/scroll";
 import { Tween } from "react-gsap";
-
-const LitteSpan = ({ title, id, rotate }) => {
-  const progress = rotate * 360;
-
-  return (
-    <div
-      className="text-[#fff] duration-1000"
-      style={{
-        // transform: `rotateX(${progress * 360}deg)`,
-        transform: `rotateX(${progress}deg)`,
-      }}
-    >
-      {title}
-    </div>
-  );
-};
+import LittleSpan from "./item";
+import { Power4 } from "gsap";
 
 const TextItem = ({ title, id }) => {
   const str = title.split("");
-  const scroll = useSelector((state) => state.scroll.scroll);
-  const [progress, setProgress] = useState(0);
-  useEffect(() => {
-    const w = window.innerWidth;
-    const curr = scroll + id * w;
-    const margin = -(w * 20) / 100;
-    if (curr < margin && curr > margin * 3) {
-      const curred = -curr + margin;
-      setProgress(curred / (-margin * 2));
-    } else {
-      if (progress !== 0) {
-        if (progress > 0.5) {
-          setProgress(0);
-        } else {
-          setProgress(1);
-        }
-      }
-    }
-  }, [scroll]);
-
-  console.log(progress);
+  //   const scroll = useSelector((state) => state.scroll.scroll);
+  //   const [progress, setProgress] = useState(0);
+  //   useEffect(() => {
+  //     const w = window.innerWidth;
+  //     const curr = scroll + id * w;
+  //     const margin = -(w * 20) / 100;
+  //     if (curr < margin && curr > margin * 3) {
+  //       const curred = -curr + margin;
+  //       setProgress(curred / (-margin * 2));
+  //     } else {
+  //       if (progress !== 0) {
+  //         if (progress > 0.5) {
+  //           setProgress(0);
+  //         } else {
+  //           setProgress(1);
+  //         }
+  //       }
+  //     }
+  //   }, [scroll]);
 
   return (
     <div className="w-[100vw] px-[20vw] shrink-0">
       <h1 className="text-center fckin text-[100px] font-medium flex items-center justify-center">
         {str.map((item, i) => {
           return (
-            <LitteSpan
+            <LittleSpan
               title={item}
               key={i}
-              rotate={progress === 0 ? 0 : progress + i / (str.length * 3)}
+              //   rotate={progress === 0 ? 0 : progress + i / (str.length * 3)}
               id={id}
               total={str.length}
+              real={i}
             />
           );
         })}
@@ -74,12 +59,13 @@ const TextCarousel = () => {
     if (!scrollDirection) {
       // console.log("scrolling up");
       if (curr < 0) {
-        let make = curr + 100;
+        let make = curr + 70;
         if (curr + 100 > 0) {
           make = 0;
         }
         gsap.to(ref.current, {
           x: make,
+          duration: 0.2,
         });
         scrollRef.current = make;
         dispatch(setScroll(make));
@@ -87,7 +73,7 @@ const TextCarousel = () => {
     } else {
       // console.log("scrolling down");
       const w = -window.innerWidth * 2;
-      let make = curr - 100;
+      let make = curr - 70;
       if (curr > w) {
         if (make < w) {
           const newMake = w;
@@ -96,12 +82,12 @@ const TextCarousel = () => {
         const tl = gsap.timeline();
         tl.to(ref.current, {
           x: make,
-          onUpdate: () => {
-            console.log(tl.progress());
-          },
+          duration: 0.2,
+          onUpdate: () => {},
         });
-        scrollRef.current = make;
         dispatch(setScroll(make));
+
+        scrollRef.current = make;
       }
     }
   };
