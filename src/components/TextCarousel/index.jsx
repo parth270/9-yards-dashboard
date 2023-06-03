@@ -1,7 +1,12 @@
 import { gsap } from "gsap";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurr, setDirection, setScroll } from "../../services/scroll";
+import {
+  setAppear,
+  setCurr,
+  setDirection,
+  setScroll,
+} from "../../services/scroll";
 import { Tween } from "react-gsap";
 import LittleSpan from "./item";
 import { Power4 } from "gsap";
@@ -27,10 +32,16 @@ const TextItem = ({ title, id, check }) => {
   //       }
   //     }
   //   }, [scroll]);
+  const dispatch = useDispatch();
 
   return (
     <div className="w-[100vw] px-[20vw] shrink-0">
-      <h1 className="text-center fckin text-[120px] font-medium flex items-center justify-center">
+      <h1
+        className="text-center fckin text-[120px] font-medium flex items-center justify-center cursor-pointer "
+        onClick={() => {
+          dispatch(setAppear(id));
+        }}
+      >
         {str.map((item, i) => {
           return (
             <LittleSpan
@@ -56,44 +67,47 @@ const TextCarousel = () => {
   const ref = useRef();
   const dispatch = useDispatch();
   const changeScroll = useSelector((state) => state.scroll.change);
+  const blur = useSelector((state) => state.scroll.blur);
   const [check, setCheck] = useState(true);
 
   const onScroll = (e) => {
     const curr = scrollRef.current;
     const scrollDirection = e.deltaY > 0;
-    if (check) {
-      if (!scrollDirection) {
-        // console.log("scrolling up");
-        if (curr < 0) {
-          let make = curr + 70;
-          if (curr + 70 > 0) {
-            make = 0;
+    if (!blur) {
+      if (check) {
+        if (!scrollDirection) {
+          // console.log("scrolling up");
+          if (curr < 0) {
+            let make = curr + 70;
+            if (curr + 70 > 0) {
+              make = 0;
+            }
+            gsap.to(ref.current, {
+              x: make,
+              duration: 0.1,
+            });
+            scrollRef.current = make;
+            direct.current = false;
+            dispatch(setScroll(make));
           }
-          gsap.to(ref.current, {
-            x: make,
-            duration: 0.1,
-          });
-          scrollRef.current = make;
-          direct.current = false;
-          dispatch(setScroll(make));
-        }
-      } else {
-        // console.log("scrolling down");
-        const w = -window.innerWidth * 2;
-        let make = curr - 70;
-        if (curr > w) {
-          if (make < w) {
-            const newMake = w;
-            make = newMake;
+        } else {
+          // console.log("scrolling down");
+          const w = -window.innerWidth * 2;
+          let make = curr - 70;
+          if (curr > w) {
+            if (make < w) {
+              const newMake = w;
+              make = newMake;
+            }
+            const tl = gsap.timeline();
+            tl.to(ref.current, {
+              x: make,
+              duration: 0.1,
+            });
+            dispatch(setScroll(make));
+            direct.current = true;
+            scrollRef.current = make;
           }
-          const tl = gsap.timeline();
-          tl.to(ref.current, {
-            x: make,
-            duration: 0.1,
-          });
-          dispatch(setScroll(make));
-          direct.current = true;
-          scrollRef.current = make;
         }
       }
     }
