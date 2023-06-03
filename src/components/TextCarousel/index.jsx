@@ -61,7 +61,13 @@ const TextItem = ({ title, id, check }) => {
 };
 
 const TextCarousel = () => {
-  const arr = ["ABOUT", "THE COMPANY", "360 INTEGRATION "];
+  const arr = [
+    "ABOUT",
+    "THE COMPANY",
+    "360 INTEGRATION ",
+    "PR & COMMUNICATION",
+    "MEDIA BUYING",
+  ];
   const scrollRef = useRef(0);
   const direct = useRef(false);
   const ref = useRef();
@@ -166,43 +172,7 @@ const TextCarousel = () => {
           dispatch(setCurr(2));
         }
       } else {
-        if (scrolled < w + margin && scrolled > w - margin) {
-          setCheck(false);
-          const tl = gsap.timeline();
-          const distLeft = scrolled;
-          tl.to(ref.current, {
-            x: 0,
-            duration: 1.5,
-            onUpdate: () => {
-              const prog = (1 - tl.progress()) * distLeft;
-              console.log(prog);
-              dispatch(setScroll(-prog));
-            },
-            onComplete: () => {
-              setCheck(true);
-              scrollRef.current = 0;
-            },
-          });
-          dispatch(setCurr(0));
-        } else if (scrolled < w * 2 + margin && scrolled > w * 2 - margin) {
-          setCheck(false);
-          const tl = gsap.timeline();
-          const distLeft = w - scrolled;
-          tl.to(ref.current, {
-            x: -w,
-            duration: 1.5,
-            onUpdate: () => {
-              const prog = (1 - tl.progress()) * distLeft;
-              console.log(prog);
-              dispatch(setScroll(-prog));
-            },
-            onComplete: () => {
-              setCheck(true);
-              scrollRef.current = -w;
-            },
-          });
-          dispatch(setCurr(1));
-        }
+        console.log(scrolled, "please check here");
       }
     };
 
