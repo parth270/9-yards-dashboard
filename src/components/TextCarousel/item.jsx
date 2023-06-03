@@ -18,8 +18,9 @@ const LitteSpan = ({ title, id, real }) => {
         const prog = (rect + margin) / (margin * 2);
         setProgress((1 - prog) * 360);
       } else if (rect > rMargin && rect < w + margin) {
-        const prog = (w - rect) / (margin * 2);
+        const prog = (rect - rMargin) / (margin * 2);
         setProgress(prog * 360);
+        // setProgress((1 - prog) * 360);
       } else {
         setProgress(0);
       }
