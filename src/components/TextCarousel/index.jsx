@@ -6,7 +6,7 @@ import { Tween } from "react-gsap";
 import LittleSpan from "./item";
 import { Power4 } from "gsap";
 
-const TextItem = ({ title, id }) => {
+const TextItem = ({ title, id, check }) => {
   const str = title.split("");
   //   const scroll = useSelector((state) => state.scroll.scroll);
   //   const [progress, setProgress] = useState(0);
@@ -30,7 +30,7 @@ const TextItem = ({ title, id }) => {
 
   return (
     <div className="w-[100vw] px-[20vw] shrink-0">
-      <h1 className="text-center fckin text-[100px] font-medium flex items-center justify-center">
+      <h1 className="text-center fckin text-[120px] font-medium flex items-center justify-center">
         {str.map((item, i) => {
           return (
             <LittleSpan
@@ -38,6 +38,7 @@ const TextItem = ({ title, id }) => {
               key={i}
               //   rotate={progress === 0 ? 0 : progress + i / (str.length * 3)}
               id={id}
+              check={check}
               total={str.length}
               real={i}
             />
@@ -51,51 +52,118 @@ const TextItem = ({ title, id }) => {
 const TextCarousel = () => {
   const arr = ["ABOUT", "THE COMPANY", "360 INTEGRATION "];
   const scrollRef = useRef(0);
+  const direct = useRef(false);
   const ref = useRef();
   const dispatch = useDispatch();
+  const changeScroll = useSelector((state) => state.scroll.change);
+  const [check, setCheck] = useState(true);
+
   const onScroll = (e) => {
     const curr = scrollRef.current;
     const scrollDirection = e.deltaY > 0;
-    if (!scrollDirection) {
-      // console.log("scrolling up");
-      if (curr < 0) {
-        let make = curr + 70;
-        if (curr + 100 > 0) {
-          make = 0;
+    if (check) {
+      if (!scrollDirection) {
+        // console.log("scrolling up");
+        if (curr < 0) {
+          let make = curr + 70;
+          if (curr + 70 > 0) {
+            make = 0;
+          }
+          gsap.to(ref.current, {
+            x: make,
+            duration: 0.1,
+          });
+          scrollRef.current = make;
+          direct.current = false;
+          dispatch(setScroll(make));
         }
-        gsap.to(ref.current, {
-          x: make,
-          duration: 0.1,
-        });
-        scrollRef.current = make;
-        dispatch(setScroll(make));
-      }
-    } else {
-      // console.log("scrolling down");
-      const w = -window.innerWidth * 2;
-      let make = curr - 70;
-      if (curr > w) {
-        if (make < w) {
-          const newMake = w;
-          make = newMake;
+      } else {
+        // console.log("scrolling down");
+        const w = -window.innerWidth * 2;
+        let make = curr - 70;
+        if (curr > w) {
+          if (make < w) {
+            const newMake = w;
+            make = newMake;
+          }
+          const tl = gsap.timeline();
+          tl.to(ref.current, {
+            x: make,
+            duration: 0.1,
+          });
+          dispatch(setScroll(make));
+          direct.current = true;
+          scrollRef.current = make;
         }
-        const tl = gsap.timeline();
-        tl.to(ref.current, {
-          x: make,
-          duration: 0.1,
-          onUpdate: () => {},
-        });
-        dispatch(setScroll(make));
-
-        scrollRef.current = make;
       }
     }
   };
 
   useEffect(() => {
-    document.addEventListener("wheel", onScroll, false);
+    let isScrolling;
+    const delay = 200;
+
+    const handleScrollStop = () => {
+      const w = window.innerWidth;
+      const scrolled = -scrollRef.current;
+      const margin = (w * 20) / 100;
+      console.log(scrolled);
+      if (direct.current === true) {
+        if (scrolled < 3 * margin && scrolled > margin) {
+          if (!(scrolled < 3 * margin && scrolled > margin * 2)) {
+            console.log("ascend left");
+            setCheck(false);
+            const tl = gsap.timeline();
+            const distLeft = w - scrolled;
+            tl.to(ref.current, {
+              x: -w,
+              duration: 1.5,
+              onUpdate: () => {
+                const prog = tl.progress() * distLeft;
+                console.log(prog);
+                dispatch(setScroll(-(scrolled + prog)));
+              },
+              onComplete: () => {
+                setCheck(true);
+                scrollRef.current = -w;
+              },
+            });
+          }
+        } else if (scrolled > margin + w && scrolled < w + margin * 2) {
+          console.log("second ascend left");
+          console.log("ascend left");
+          setCheck(false);
+          const tl = gsap.timeline();
+          const distLeft = w * 2 - scrolled;
+          tl.to(ref.current, {
+            x: -w * 2,
+            duration: 1.5,
+            onUpdate: () => {
+              const prog = tl.progress() * distLeft;
+              console.log(prog);
+              dispatch(setScroll(-(scrolled + prog)));
+            },
+            onComplete: () => {
+              setCheck(true);
+              scrollRef.current = -w * 2;
+            },
+          });
+        }
+      }
+    };
+
+    function debounceScroll() {
+      clearTimeout(isScrolling);
+      isScrolling = setTimeout(handleScrollStop, delay);
+    }
+
+    const onScrollSure = (e) => {
+      debounceScroll();
+      onScroll(e);
+    };
+    document.addEventListener("wheel", onScrollSure, false);
     return () => {
-      document.removeEventListener("wheel", onScroll, false);
+      document.removeEventListener("wheel", onScrollSure, false);
     };
   });
 
@@ -103,7 +171,7 @@ const TextCarousel = () => {
     <div className="w-[100%] h-[100vh] absolute z-10  flex overflow-hidden">
       <div className="min-w-[100vw] h-[100vh] items-center flex" ref={ref}>
         {arr.map((item, i) => {
-          return <TextItem title={item} key={i} id={i} />;
+          return <TextItem title={item} key={i} id={i} check={check} />;
         })}
       </div>
     </div>

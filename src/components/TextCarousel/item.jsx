@@ -1,16 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 
-const LitteSpan = ({ title, id, real }) => {
+const LitteSpan = ({ title, id, real,check }) => {
   //   const progress = rotate * 360;
   const [progress, setProgress] = useState(0);
   const ref = useRef();
   const scroll = useSelector((state) => state.scroll.scroll);
   useEffect(() => {
+    const delay=check?100:0;
     setTimeout(() => {
       const rect = ref.current.getBoundingClientRect().x;
       const w = window.innerWidth;
-      const margin = (w * 30) / 100;
+      const margin = (w * 25) / 100;
       const lMargin = margin;
       const rMargin = w - margin;
 
@@ -24,13 +25,14 @@ const LitteSpan = ({ title, id, real }) => {
       } else {
         setProgress(0);
       }
-    }, 100);
+    },delay);
   }, [scroll]);
   return (
     <div
-      className="text-[#fff] duration-300 "
+      className="text-[#fff]"
       ref={ref}
       style={{
+        transitionDuration: "0.7s",
         // transform: `rotateX(${progress * 360}deg)`,
         transform: `rotateX(${progress}deg)`,
       }}
