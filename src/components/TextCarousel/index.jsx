@@ -59,13 +59,13 @@ const TextCarousel = () => {
     if (!scrollDirection) {
       // console.log("scrolling up");
       if (curr < 0) {
-        let make = curr + 30;
+        let make = curr + 70;
         if (curr + 100 > 0) {
           make = 0;
         }
         gsap.to(ref.current, {
           x: make,
-          duration: 0.1,
+          duration: 0.2,
         });
         scrollRef.current = make;
         dispatch(setScroll(make));
@@ -73,7 +73,7 @@ const TextCarousel = () => {
     } else {
       // console.log("scrolling down");
       const w = -window.innerWidth * 2;
-      let make = curr - 30;
+      let make = curr - 70;
       if (curr > w) {
         if (make < w) {
           const newMake = w;
@@ -82,7 +82,7 @@ const TextCarousel = () => {
         const tl = gsap.timeline();
         tl.to(ref.current, {
           x: make,
-          duration: 0.1,
+          duration: 0.2,
           onUpdate: () => {},
         });
         dispatch(setScroll(make));

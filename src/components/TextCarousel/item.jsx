@@ -11,21 +11,22 @@ const LitteSpan = ({ title, id, real }) => {
     setTimeout(() => {
       const rect = ref.current.getBoundingClientRect().x;
       const w = window.innerWidth;
-      const margin = (w * 20) / 100;
+      const margin = (w * 30) / 100;
       const lMargin = margin;
       const rMargin = w - margin;
       if (rect < lMargin && lMargin > -rect) {
         const prog = (rect + margin) / (margin * 2);
-        console.log(prog);
         setProgress((1 - prog) * 360);
+      } else if (rect > rMargin) {
+        console.log("right");
       } else {
         setProgress(0);
       }
-    }, 100);
+    }, 200);
   }, [scroll]);
   return (
     <div
-      className="text-[#fff] duration-1000"
+      className="text-[#fff] duration-300 "
       ref={ref}
       style={{
         // transform: `rotateX(${progress * 360}deg)`,
