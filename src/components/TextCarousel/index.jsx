@@ -11,9 +11,9 @@ import { Tween } from "react-gsap";
 import LittleSpan from "./item";
 import { Power4 } from "gsap";
 
-
 const TextItem1 = ({ title, id, check }) => {
-  const str = title.split("");
+  const [strr, setStrr] = useState(title);
+  const str = strr.split("");
   //   const scroll = useSelector((state) => state.scroll.scroll);
   //   const [progress, setProgress] = useState(0);
   //   useEffect(() => {
@@ -35,28 +35,68 @@ const TextItem1 = ({ title, id, check }) => {
   //   }, [scroll]);
   const dispatch = useDispatch();
 
+  const extraCurr = useSelector((state) => state.scroll.extraCurr);
+  const [check1, setCheck] = useState(false);
+  const [trigger, setTrigger] = useState(true);
+  useEffect(() => {
+    if (check1) {
+      setTrigger(false);
+      setTimeout(() => {
+        if (extraCurr === 0) {
+          setStrr("PR & COMMUNICATION");
+        } else if (extraCurr === 1) {
+          setStrr("MEDIA BUYING");
+        } else {
+          setStrr(title);
+        }
+      }, 1050);
+      setTimeout(() => {
+        setTrigger(true);
+      }, 1100);
+    } else {
+      setCheck(true);
+    }
+  }, [extraCurr]);
+
   return (
-    <div className="w-[100vw] px-[20vw] shrink-0">
-      <h1
-        className="text-center fckin text-[120px] font-medium flex items-center justify-center cursor-pointer "
-        onClick={() => {
-          dispatch(setAppear(id));
+    <div className="w-[100vw] px-[15vw] shrink-0">
+      <Tween
+        from={{
+          clipPath: "inset(0px 0px 0px 0px)",
         }}
+        to={{
+          clipPath: trigger
+            ? "inset(0px 0px 0px 0px)"
+            : "inset(0px 0vw 0px 100vw)",
+        }}
+        duration={1}
+        ease={Power4.easeInOut}
       >
-        {str.map((item, i) => {
-          return (
-            <LittleSpan
-              title={item}
-              key={i}
-              //   rotate={progress === 0 ? 0 : progress + i / (str.length * 3)}
-              id={id}
-              check={check}
-              total={str.length}
-              real={i}
-            />
-          );
-        })}
-      </h1>
+        <h1
+          className="text-center fckin text-[120px] font-medium flex items-center justify-center cursor-pointer "
+          onClick={() => {
+            if (extraCurr === 0) {
+              dispatch(setAppear(3));
+            } else if (extraCurr === 1) {
+              dispatch(setAppear(4));
+            }
+          }}
+        >
+          {str.map((item, i) => {
+            return (
+              <LittleSpan
+                title={item}
+                key={i}
+                //   rotate={progress === 0 ? 0 : progress + i / (str.length * 3)}
+                id={id}
+                check={check}
+                total={str.length}
+                real={i}
+              />
+            );
+          })}
+        </h1>
+      </Tween>
     </div>
   );
 };
@@ -111,11 +151,7 @@ const TextItem = ({ title, id, check }) => {
 };
 
 const TextCarousel = () => {
-  const arr = [
-    "ABOUT",
-    "THE COMPANY",
-    "360 INTEGRATION ",
-  ];
+  const arr = ["ABOUT", "THE COMPANY", "360 INTEGRATION "];
   const scrollRef = useRef(0);
   const direct = useRef(false);
   const ref = useRef();
@@ -212,7 +248,7 @@ const TextCarousel = () => {
               scrollRef.current = -w;
             },
           });
-        } else if (scrolled < margin-50) {
+        } else if (scrolled < margin - 50) {
           setCheck(false);
           const tl = gsap.timeline();
           const distLeft = scrolled;
@@ -228,7 +264,7 @@ const TextCarousel = () => {
               scrollRef.current = 0;
             },
           });
-        } else if (scrolled > w && scrolled < w + margin-50) {
+        } else if (scrolled > w && scrolled < w + margin - 50) {
           setCheck(false);
           const tl = gsap.timeline();
           const distLeft = w - scrolled;
@@ -303,9 +339,9 @@ const TextCarousel = () => {
       <div className="w-[200vw] h-[100vh] items-center flex" ref={ref}>
         {arr.map((item, i) => {
           if (i === 2) {
-            return <TextItem title={item} key={i} id={i} check={check} />;
-          } else {
             return <TextItem1 title={item} key={i} id={i} check={check} />;
+          } else {
+            return <TextItem title={item} key={i} id={i} check={check} />;
           }
         })}
       </div>

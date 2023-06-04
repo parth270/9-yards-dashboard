@@ -2,9 +2,10 @@ import { Environment, useGLTF } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { gsap } from "gsap";
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useSpring, animated } from "@react-spring/three";
 import * as THREE from "three";
+import { setExtraCurr } from "../../../services/scroll";
 const Scene = () => {
   const { scene: scene } = useGLTF("/pencil.glb");
   const { scene: scene1 } = useGLTF("/Lightbulb (1).glb");
@@ -28,6 +29,8 @@ const Scene = () => {
   const ref9 = useRef();
   const ref10 = useRef();
   const ref11 = useRef();
+
+  const dispatch = useDispatch();
 
   useFrame(() => {
     ref1.current.rotation.y += 0.01;
@@ -116,18 +119,40 @@ const Scene = () => {
     intensity: blur ? 0 : 2,
   });
   const [realcurr, setRealCurr] = useState(0);
+  const extraCurr = useSelector((state) => state.scroll.extraCurr);
+  const [trigger, setTrigger] = useState({ trigger: false, id: 10 });
 
   useEffect(() => {
     if (check) {
       setScaleDown(false);
       setTimeout(() => {
         setRealCurr(curr);
+
         setScaleDown(true);
       }, 500);
+      setTimeout(() => {
+        if (curr !== 2) {
+          dispatch(setExtraCurr(10));
+        }
+      }, 600);
     } else {
       setCheck(true);
     }
   }, [curr]);
+
+  useEffect(() => {
+    if (check) {
+      if (realcurr === 2) {
+        setScaleDown(false);
+        setTimeout(() => {
+          dispatch(setExtraCurr(trigger.id));
+          setScaleDown(true);
+        }, 500);
+      }
+    } else {
+      setCheck(true);
+    }
+  }, [trigger]);
 
   const [fCheck, setFCheck] = useState(false);
   const [sCheck, setSCheck] = useState(false);
@@ -245,11 +270,11 @@ const Scene = () => {
       const el = document.createElement("div");
       el.id = id;
       el.className =
-        "fixed w-[100px] text-[20px] translate-x-[-50%] uppercase text-center font-medium fckin text-[#000]";
+        "fixed w-[200px] whitespace-nowrap text-[20px] translate-x-[-50%] uppercase text-center font-medium fckin text-[#000]";
       el.style.top = `${fPos.y + 80}px`;
       el.style.left = `${fPos.x}px`;
       el.style.zIndex = 9999999999999;
-      el.innerHTML = "Branding";
+      el.innerHTML = "PR & COMMUNICATION";
       document.body.appendChild(el);
     } else {
       const el = document.getElementById(id);
@@ -281,31 +306,41 @@ const Scene = () => {
 
   const moveMouse = (e) => {
     if (realcurr === 2) {
-      if (
-        e.clientX > fPos.x - 90 &&
-        e.clientX < fPos.x + 80 &&
-        e.clientY > (window.innerHeight * 7) / 10
-      ) {
-        document.body.style.cursor = "pointer";
-        setFOver(true);
-      } else if (
-        e.clientX > sPos.x - 90 &&
-        e.clientX < sPos.x + 80 &&
-        e.clientY > (window.innerHeight * 7) / 10
-      ) {
-        document.body.style.cursor = "pointer";
-        setSOver(true);
-      } else {
-        document.body.style.cursor = "initial";
-        setSOver(false);
-        setFOver(false);
+      if (!blur) {
+        if (
+          e.clientX > fPos.x - 90 &&
+          e.clientX < fPos.x + 80 &&
+          e.clientY > (window.innerHeight * 7) / 10
+        ) {
+          document.body.style.cursor = "pointer";
+          setFOver(true);
+        } else if (
+          e.clientX > sPos.x - 90 &&
+          e.clientX < sPos.x + 80 &&
+          e.clientY > (window.innerHeight * 7) / 10
+        ) {
+          document.body.style.cursor = "pointer";
+          setSOver(true);
+        } else {
+          document.body.style.cursor = "initial";
+          setSOver(false);
+          setFOver(false);
+        }
       }
     }
   };
 
   const onMouseClick = () => {
     if (fMouseOver) {
+      setTrigger({
+        trigger: !trigger.trigger,
+        id: 0,
+      });
     } else if (sMouseOver) {
+      setTrigger({
+        trigger: !trigger.trigger,
+        id: 1,
+      });
     }
   };
 
@@ -334,22 +369,28 @@ const Scene = () => {
           <primitive object={scene1} />
         </animated.group>
       </group>
-      <group position={[realcurr === 2 ? 0 : 10, 0, 0]}>
+      <group
+        position={[extraCurr === 10 ? (realcurr === 2 ? 0 : 10) : 10, 0, 0]}
+      >
         <animated.group ref={ref3} position={position3} scale={scale3}>
           <primitive object={scene2} />
         </animated.group>
       </group>
-      <group position={[realcurr === 3 ? 0 : 10, 0, 0]}>
+      <group
+        // position={[extraCurr === 0 ? 2 : realcurr === 3 ? 0 : 10, 0, 0]}
+        position={[realcurr === 2 ? (extraCurr === 0 ? 0 : 10) : 10, 0, 0]}
+      >
         <animated.group ref={ref10} position={position4} scale={scale4}>
           <primitive object={scene9} />
         </animated.group>
       </group>
-      <group position={[realcurr === 5 ? 0 : 10, 0, 0]}>
+      <group
+        position={[realcurr === 2 ? (extraCurr === 1 ? 0 : 10) : 10, 0, 0]}
+      >
         <animated.group ref={ref11} position={position5} scale={scale5}>
           <primitive object={scene10} />
         </animated.group>
       </group>
-
       <group position={[realcurr === 2 ? 0 : 10, 0, 0]}>
         <animated.group ref={ref4} position={BallPos1} scale={BallScale1}>
           <primitive object={scene3} />

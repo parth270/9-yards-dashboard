@@ -37,12 +37,14 @@ export const content = [
   [
     {
       title: "Vision",
-      className: "text-[60px] shrink-0  pt-[300px] text-[#f7972b] font-bold  text-[#fff] fckin tracking-wide",
+      className:
+        "text-[60px] shrink-0  pt-[300px] text-[#f7972b] font-bold  text-[#fff] fckin tracking-wide",
     },
     {
       title:
         "To be the Capital’s single point-of-contact for all things Media and Marketing.",
-      className: "text-[20px] shrink-0 text-[#fff] mt-[0px] fckin tracking-wide",
+      className:
+        "text-[20px] shrink-0 text-[#fff] mt-[0px] fckin tracking-wide",
     },
     {
       title: "Mission",
@@ -52,7 +54,8 @@ export const content = [
     {
       title:
         "To be the Capital’s single point-of-contact for all things Media and Marketing.",
-      className: "text-[20px] shrink-0 text-[#fff] mt-[0px] fckin tracking-wide",
+      className:
+        "text-[20px] shrink-0 text-[#fff] mt-[0px] fckin tracking-wide",
     },
     {
       title: "Values",
@@ -115,12 +118,14 @@ export const content = [
   [
     {
       title: "Vision",
-      className: "text-[60px] shrink-0  pt-[300px] text-[#f7972b] font-bold  text-[#fff] fckin tracking-wide",
+      className:
+        "text-[60px] shrink-0  pt-[300px] text-[#f7972b] font-bold  text-[#fff] fckin tracking-wide",
     },
     {
       title:
         "To be the Capital’s single point-of-contact for all things Media and Marketing.",
-      className: "text-[20px] shrink-0 text-[#fff] mt-[0px] fckin tracking-wide",
+      className:
+        "text-[20px] shrink-0 text-[#fff] mt-[0px] fckin tracking-wide",
     },
     {
       title: "Mission",
@@ -130,7 +135,8 @@ export const content = [
     {
       title:
         "To be the Capital’s single point-of-contact for all things Media and Marketing.",
-      className: "text-[20px] shrink-0 text-[#fff] mt-[0px] fckin tracking-wide",
+      className:
+        "text-[20px] shrink-0 text-[#fff] mt-[0px] fckin tracking-wide",
     },
     {
       title: "Values",
@@ -188,6 +194,62 @@ export const content = [
       title: `We’re always on the same team`,
       className:
         "text-[20px] pb-[50px] shrink-0 text-[#fff] mt-[0px] fckin tracking-wide",
+    },
+  ],
+  [
+    {
+      title: "Welcome",
+      className:
+        "text-[60px] shrink-0  pt-[0px] text-[#f7972b] font-bold   fckin tracking-wide",
+    },
+    {
+      title: `Thank you for considering 9Yards PR and
+        Communications to bolster your brand’s market
+        reputation and communication strategy.`,
+      className:
+        "text-[20px] mt-[30px]  shrink-0 text-[#fff] mt-[0px] fckin tracking-wide",
+    },
+    {
+      title: `We believe in unique ideas, unconventional
+      concepts and perfectionism till the very last step`,
+      className:
+        "text-[20px] font-bold mt-[20px] shrink-0 text-[#fff] mt-[0px] fckin tracking-wide",
+    },
+    {
+      title: `We aim to create tangible results in an increasingly
+      intangible world through our specialist expertise`,
+      className:
+        "text-[20px] mt-[20px] shrink-0 text-[#fff] mt-[0px] fckin tracking-wide",
+    },
+    {
+      title: `Our expert teams and extensive media network will
+      ensure that your communications strategy works
+      for your goals. Above all, we’re a dynamic team
+      that’s always looking for the next big thing.`,
+      className:
+        "text-[20px] mt-[20px] shrink-0 text-[#fff] mt-[0px] fckin tracking-wide",
+    },
+  ],
+  [
+    {
+      title: "Who are we?",
+      className:
+        "text-[60px] shrink-0  pt-[0px] text-[#f7972b] font-bold   fckin tracking-wide",
+    },
+    {
+      title: `We are a group of communication fanatics, born and bred in the UAE. We understand the local sentiments and peculiarities of the market, a key ingredient in building any communication strategy`,
+      className:
+        "text-[20px] mt-[30px]  shrink-0 text-[#fff] mt-[0px] fckin tracking-wide",
+    },
+    {
+      title: `We put our clients first, creating a new defination of a media planning and buying unit, one centered in media. We believe that media is the most important factor for building businesses and brands in the 21st century. To deliver this we created integrated services from aggressive price control to IP ownership, innovation and creativity to traffic and production, anaylytics and ROI to the best research systems and tools.`,
+      className:
+        "text-[20px] mt-[20px] shrink-0 text-[#fff] mt-[0px] fckin tracking-wide",
+    },
+    {
+      title: `In an ever-changing media landscape, we evolve and learn to deliver a state-of-the-art solution.`,
+      className:
+        "text-[20px] mt-[20px] shrink-0 text-[#fff] mt-[0px] fckin tracking-wide",
     },
   ],
 ];
