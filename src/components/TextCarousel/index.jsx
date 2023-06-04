@@ -166,6 +166,39 @@ const TextCarousel = () => {
           });
         }
       } else {
+        if (scrolled < w - margin) {
+          setCheck(false);
+          const tl = gsap.timeline();
+          const distLeft = scrolled;
+          tl.to(ref.current, {
+            x: 0,
+            duration: 1.5,
+            onUpdate: () => {
+              const prog = (1 - tl.progress()) * distLeft;
+              dispatch(setScroll(-prog));
+            },
+            onComplete: () => {
+              setCheck(true);
+              scrollRef.current = 0;
+            },
+          });
+        } else if (scrolled < w * 2 - margin) {
+          setCheck(false);
+          const tl = gsap.timeline();
+          const distLeft = w - scrolled;
+          tl.to(ref.current, {
+            x: -w,
+            duration: 1.5,
+            onUpdate: () => {
+              const prog = tl.progress() * distLeft;
+              dispatch(setScroll(-(scrolled + prog)));
+            },
+            onComplete: () => {
+              setCheck(true);
+              scrollRef.current = -w;
+            },
+          });
+        }
         // console.log(scrolled, "please check here");
       }
     };
@@ -184,8 +217,6 @@ const TextCarousel = () => {
       document.removeEventListener("wheel", onScrollSure, false);
     };
   });
-
-
 
   return (
     <div className="w-[100%] h-[100vh] absolute z-10  flex overflow-hidden">
