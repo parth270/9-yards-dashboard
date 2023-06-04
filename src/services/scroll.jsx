@@ -8,6 +8,7 @@ const threeSlice = createSlice({
     curr: 0,
     blur: false,
     dataCurr: 0,
+    extraCurr: 10,
   },
   reducers: {
     setScroll: (state, action) => {
@@ -26,10 +27,13 @@ const threeSlice = createSlice({
     setDisAppear: (state, action) => {
       state.blur = false;
     },
+    setExtraCurr: (state, action) => {
+      state.extraCurr = action.payload;
+    },
   },
 });
 
-export const { setScroll, setDirection, setCurr, setAppear,setDisAppear } =
+export const { setScroll, setDirection, setCurr, setAppear, setDisAppear,setExtraCurr } =
   threeSlice.actions;
 
 export default threeSlice.reducer;
