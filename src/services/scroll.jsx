@@ -4,7 +4,7 @@ const threeSlice = createSlice({
   name: "Drag",
   initialState: {
     scroll: 0,
-    direction: false,
+    direction: true,
     curr: 0,
     blur: false,
     dataCurr: 0,

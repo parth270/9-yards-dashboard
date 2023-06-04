@@ -7,7 +7,7 @@ import { useSpring, animated } from "@react-spring/three";
 
 const Scene = () => {
   const { scene: scene } = useGLTF("/pencil.glb");
-  const { scene: scene1 } = useGLTF("/Lightbulb.glb");
+  const { scene: scene1 } = useGLTF("/Lightbulb (1).glb");
   const { scene: scene2 } = useGLTF("/9_Logo.glb");
   const { scene: scene3 } = useGLTF("/PR_communication.glb");
   const ref1 = useRef();
@@ -35,8 +35,8 @@ const Scene = () => {
       position3: scaledown ? [0, -0.68, 0] : [0, -0.23, 0],
       scale3: scaledown ? [0.03, 0.03, 0.03] : [0.01, 0.01, 0.01],
       intensity: blur ? 0 : 2,
+      
     });
-  console.log(intensity);
   const [realcurr, setRealCurr] = useState(0);
 
   useEffect(() => {

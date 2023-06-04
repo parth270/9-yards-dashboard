@@ -95,6 +95,7 @@ const TextCarousel = () => {
             scrollRef.current = make;
             direct.current = false;
             dispatch(setScroll(make));
+            dispatch(setDirection(false));
           }
         } else {
           // console.log("scrolling down");
@@ -111,6 +112,7 @@ const TextCarousel = () => {
               duration: 0.1,
             });
             dispatch(setScroll(make));
+            dispatch(setDirection(true));
             direct.current = true;
             scrollRef.current = make;
           }
@@ -127,12 +129,10 @@ const TextCarousel = () => {
       const w = window.innerWidth;
       const scrolled = -scrollRef.current;
       const margin = (w * 20) / 100;
-      console.log(scrolled);
       if (direct.current === true) {
         if (scrolled < 3 * margin && scrolled > margin) {
           // if (!(scrolled < 3 * margin && scrolled > margin * 2)) {
 
-          console.log("ascend left");
           setCheck(false);
           const tl = gsap.timeline();
           const distLeft = w - scrolled;
@@ -141,7 +141,6 @@ const TextCarousel = () => {
             duration: 1.5,
             onUpdate: () => {
               const prog = tl.progress() * distLeft;
-              console.log(prog);
               dispatch(setScroll(-(scrolled + prog)));
             },
             onComplete: () => {
@@ -149,10 +148,7 @@ const TextCarousel = () => {
               scrollRef.current = -w;
             },
           });
-          dispatch(setCurr(1));
         } else if (scrolled > margin + w && scrolled < w + margin * 3) {
-          console.log("second ascend left");
-          console.log("ascend left");
           setCheck(false);
           const tl = gsap.timeline();
           const distLeft = w * 2 - scrolled;
@@ -161,7 +157,6 @@ const TextCarousel = () => {
             duration: 1.5,
             onUpdate: () => {
               const prog = tl.progress() * distLeft;
-              console.log(prog);
               dispatch(setScroll(-(scrolled + prog)));
             },
             onComplete: () => {
@@ -169,10 +164,9 @@ const TextCarousel = () => {
               scrollRef.current = -w * 2;
             },
           });
-          dispatch(setCurr(2));
         }
       } else {
-        console.log(scrolled, "please check here");
+        // console.log(scrolled, "please check here");
       }
     };
 
@@ -190,6 +184,8 @@ const TextCarousel = () => {
       document.removeEventListener("wheel", onScrollSure, false);
     };
   });
+
+
 
   return (
     <div className="w-[100%] h-[100vh] absolute z-10  flex overflow-hidden">
