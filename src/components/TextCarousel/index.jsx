@@ -11,6 +11,56 @@ import { Tween } from "react-gsap";
 import LittleSpan from "./item";
 import { Power4 } from "gsap";
 
+
+const TextItem1 = ({ title, id, check }) => {
+  const str = title.split("");
+  //   const scroll = useSelector((state) => state.scroll.scroll);
+  //   const [progress, setProgress] = useState(0);
+  //   useEffect(() => {
+  //     const w = window.innerWidth;
+  //     const curr = scroll + id * w;
+  //     const margin = -(w * 20) / 100;
+  //     if (curr < margin && curr > margin * 3) {
+  //       const curred = -curr + margin;
+  //       setProgress(curred / (-margin * 2));
+  //     } else {
+  //       if (progress !== 0) {
+  //         if (progress > 0.5) {
+  //           setProgress(0);
+  //         } else {
+  //           setProgress(1);
+  //         }
+  //       }
+  //     }
+  //   }, [scroll]);
+  const dispatch = useDispatch();
+
+  return (
+    <div className="w-[100vw] px-[20vw] shrink-0">
+      <h1
+        className="text-center fckin text-[120px] font-medium flex items-center justify-center cursor-pointer "
+        onClick={() => {
+          dispatch(setAppear(id));
+        }}
+      >
+        {str.map((item, i) => {
+          return (
+            <LittleSpan
+              title={item}
+              key={i}
+              //   rotate={progress === 0 ? 0 : progress + i / (str.length * 3)}
+              id={id}
+              check={check}
+              total={str.length}
+              real={i}
+            />
+          );
+        })}
+      </h1>
+    </div>
+  );
+};
+
 const TextItem = ({ title, id, check }) => {
   const str = title.split("");
   //   const scroll = useSelector((state) => state.scroll.scroll);
@@ -65,8 +115,6 @@ const TextCarousel = () => {
     "ABOUT",
     "THE COMPANY",
     "360 INTEGRATION ",
-    "PR & COMMUNICATION",
-    "MEDIA BUYING",
   ];
   const scrollRef = useRef(0);
   const direct = useRef(false);
@@ -164,7 +212,7 @@ const TextCarousel = () => {
               scrollRef.current = -w;
             },
           });
-        } else if (scrolled < margin) {
+        } else if (scrolled < margin-50) {
           setCheck(false);
           const tl = gsap.timeline();
           const distLeft = scrolled;
@@ -180,7 +228,7 @@ const TextCarousel = () => {
               scrollRef.current = 0;
             },
           });
-        } else if (scrolled > w && scrolled < w + margin) {
+        } else if (scrolled > w && scrolled < w + margin-50) {
           setCheck(false);
           const tl = gsap.timeline();
           const distLeft = w - scrolled;
@@ -252,12 +300,12 @@ const TextCarousel = () => {
 
   return (
     <div className="w-[100%] h-[100vh] absolute z-10  flex overflow-hidden">
-      <div className="min-w-[100vw] h-[100vh] items-center flex" ref={ref}>
+      <div className="w-[200vw] h-[100vh] items-center flex" ref={ref}>
         {arr.map((item, i) => {
           if (i === 2) {
             return <TextItem title={item} key={i} id={i} check={check} />;
           } else {
-            return <TextItem title={item} key={i} id={i} check={check} />;
+            return <TextItem1 title={item} key={i} id={i} check={check} />;
           }
         })}
       </div>
