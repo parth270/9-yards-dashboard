@@ -334,7 +334,7 @@ const Scene = () => {
           <primitive object={scene1} />
         </animated.group>
       </group>
-      <group position={[realcurr === 4 ? 0 : 10, 0, 0]}>
+      <group position={[realcurr === 2 ? 0 : 10, 0, 0]}>
         <animated.group ref={ref3} position={position3} scale={scale3}>
           <primitive object={scene2} />
         </animated.group>
@@ -344,7 +344,7 @@ const Scene = () => {
           <primitive object={scene9} />
         </animated.group>
       </group>
-      <group position={[realcurr === 2 ? 0 : 10, 0, 0]}>
+      <group position={[realcurr === 5 ? 0 : 10, 0, 0]}>
         <animated.group ref={ref11} position={position5} scale={scale5}>
           <primitive object={scene10} />
         </animated.group>
