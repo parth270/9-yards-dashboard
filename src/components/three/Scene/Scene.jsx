@@ -22,25 +22,21 @@ const Scene = () => {
   });
 
   const curr = useSelector((state) => state.scroll.curr);
+  const blur = useSelector((state) => state.scroll.blur);
   const [check, setCheck] = useState(false);
   const [scaledown, setScaleDown] = useState(true);
 
-  const {
-    scale1,
-    position1,
-    scale2,
-    position2,
-    scale3,
-    position3,
-  } = useSpring({
-    position1: scaledown ? [0, -0.45, 0] : [0, -0.1, 0],
-    scale1: scaledown ? [0.05, 0.05, 0.05] : [0.01, 0.01, 0.01],
-    position2: scaledown ? [0, 0.35, 0] : [0, 0.1, 0],
-    scale2: scaledown ? [0.03, 0.03, 0.03] : [0.01, 0.01, 0.01],
-    position3: scaledown ? [0, -0.68, 0] : [0, -0.23, 0],
-    scale3: scaledown ? [0.03, 0.03, 0.03] : [0.01, 0.01, 0.01],
-  });
-
+  const { scale1, position1, scale2, position2, scale3, position3, intensity } =
+    useSpring({
+      position1: scaledown ? [0, -0.45, 0] : [0, -0.1, 0],
+      scale1: scaledown ? [0.05, 0.05, 0.05] : [0.01, 0.01, 0.01],
+      position2: scaledown ? [0, 0.35, 0] : [0, 0.1, 0],
+      scale2: scaledown ? [0.03, 0.03, 0.03] : [0.01, 0.01, 0.01],
+      position3: scaledown ? [0, -0.68, 0] : [0, -0.23, 0],
+      scale3: scaledown ? [0.03, 0.03, 0.03] : [0.01, 0.01, 0.01],
+      intensity: blur ? 0 : 2,
+    });
+  console.log(intensity);
   const [realcurr, setRealCurr] = useState(0);
 
   useEffect(() => {
@@ -57,13 +53,13 @@ const Scene = () => {
 
   return (
     <>
-      <ambientLight intensity={1} color="#fff" />
-      <Environment files="https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/industrial_workshop_foundry_1k.hdr" />
+      <animated.ambientLight intensity={intensity} color={"#fff"} />
+      {!blur && (
+        <Environment files="https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/industrial_workshop_foundry_1k.hdr"></Environment>
+      )}
       <group position={[realcurr === 0 ? 0 : 10, 0, 0]}>
         <animated.group ref={ref1} position={position1} scale={scale1}>
-          <primitive object={scene}>
-            <meshBasicMaterial transparent opacity={0.5} />
-          </primitive>
+          <primitive object={scene}></primitive>
         </animated.group>
       </group>
       <group position={[realcurr === 1 ? 0 : 10, 0, 0]}>
