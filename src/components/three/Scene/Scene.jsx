@@ -270,11 +270,11 @@ const Scene = () => {
       const el = document.createElement("div");
       el.id = id;
       el.className =
-        "fixed w-[100px] text-[20px] translate-x-[-50%] uppercase text-center font-medium fckin text-[#000]";
+        "fixed w-[200px] whitespace-nowrap text-[20px] translate-x-[-50%] uppercase text-center font-medium fckin text-[#000]";
       el.style.top = `${fPos.y + 80}px`;
       el.style.left = `${fPos.x}px`;
       el.style.zIndex = 9999999999999;
-      el.innerHTML = "Branding";
+      el.innerHTML = "PR & COMMUNICATION";
       document.body.appendChild(el);
     } else {
       const el = document.getElementById(id);
@@ -306,24 +306,26 @@ const Scene = () => {
 
   const moveMouse = (e) => {
     if (realcurr === 2) {
-      if (
-        e.clientX > fPos.x - 90 &&
-        e.clientX < fPos.x + 80 &&
-        e.clientY > (window.innerHeight * 7) / 10
-      ) {
-        document.body.style.cursor = "pointer";
-        setFOver(true);
-      } else if (
-        e.clientX > sPos.x - 90 &&
-        e.clientX < sPos.x + 80 &&
-        e.clientY > (window.innerHeight * 7) / 10
-      ) {
-        document.body.style.cursor = "pointer";
-        setSOver(true);
-      } else {
-        document.body.style.cursor = "initial";
-        setSOver(false);
-        setFOver(false);
+      if (!blur) {
+        if (
+          e.clientX > fPos.x - 90 &&
+          e.clientX < fPos.x + 80 &&
+          e.clientY > (window.innerHeight * 7) / 10
+        ) {
+          document.body.style.cursor = "pointer";
+          setFOver(true);
+        } else if (
+          e.clientX > sPos.x - 90 &&
+          e.clientX < sPos.x + 80 &&
+          e.clientY > (window.innerHeight * 7) / 10
+        ) {
+          document.body.style.cursor = "pointer";
+          setSOver(true);
+        } else {
+          document.body.style.cursor = "initial";
+          setSOver(false);
+          setFOver(false);
+        }
       }
     }
   };

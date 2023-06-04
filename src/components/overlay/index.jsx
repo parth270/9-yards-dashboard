@@ -7,7 +7,7 @@ import { content } from "../other/content";
 const Overlay = () => {
   const [curr, setCurr] = useState(true);
   const dispatch = useDispatch();
-  const { curr: currr } = useSelector((state) => state.scroll);
+  const { dataCurr: currr } = useSelector((state) => state.scroll);
 
   return (
     <Tween
