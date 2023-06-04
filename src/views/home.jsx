@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import Overlay from "../components/overlay";
 
 const HomePage = () => {
-  const curr = useSelector((state) => state.scroll.curr);
+
   const blur = useSelector((state) => state.scroll.blur);
 
   const bgs = ["#bfbfbf", "#0000ff", "#fff"];
@@ -13,7 +13,7 @@ const HomePage = () => {
     <div
       className="w-[100%] flex items-center bg-[#111] justify-center h-[100vh] duration-200"
       style={{
-        backgroundColor: bgs[curr],
+        backgroundColor: "#fff",
       }}
     >
       <CanvasContainer>
