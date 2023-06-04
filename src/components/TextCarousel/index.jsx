@@ -130,7 +130,23 @@ const TextCarousel = () => {
       const scrolled = -scrollRef.current;
       const margin = (w * 20) / 100;
       if (direct.current === true) {
-        if (scrolled < 3 * margin && scrolled > margin) {
+        if (scrolled > margin + w) {
+          setCheck(false);
+          const tl = gsap.timeline();
+          const distLeft = w * 2 - scrolled;
+          tl.to(ref.current, {
+            x: -w * 2,
+            duration: 1.5,
+            onUpdate: () => {
+              const prog = tl.progress() * distLeft;
+              dispatch(setScroll(-(scrolled + prog)));
+            },
+            onComplete: () => {
+              setCheck(true);
+              scrollRef.current = -w * 2;
+            },
+          });
+        } else if (scrolled > margin && scrolled < w) {
           // if (!(scrolled < 3 * margin && scrolled > margin * 2)) {
 
           setCheck(false);
@@ -148,12 +164,28 @@ const TextCarousel = () => {
               scrollRef.current = -w;
             },
           });
-        } else if (scrolled > margin + w && scrolled < w + margin * 3) {
+        } else if (scrolled < margin) {
           setCheck(false);
           const tl = gsap.timeline();
-          const distLeft = w * 2 - scrolled;
+          const distLeft = scrolled;
           tl.to(ref.current, {
-            x: -w * 2,
+            x: 0,
+            duration: 0.5,
+            onUpdate: () => {
+              const prog = (1 - tl.progress()) * distLeft;
+              dispatch(setScroll(-prog));
+            },
+            onComplete: () => {
+              setCheck(true);
+              scrollRef.current = 0;
+            },
+          });
+        } else if (scrolled > w && scrolled < w + margin) {
+          setCheck(false);
+          const tl = gsap.timeline();
+          const distLeft = w - scrolled;
+          tl.to(ref.current, {
+            x: -w,
             duration: 1.5,
             onUpdate: () => {
               const prog = tl.progress() * distLeft;
@@ -161,11 +193,44 @@ const TextCarousel = () => {
             },
             onComplete: () => {
               setCheck(true);
-              scrollRef.current = -w * 2;
+              scrollRef.current = -w;
             },
           });
         }
       } else {
+        if (scrolled < w - margin) {
+          setCheck(false);
+          const tl = gsap.timeline();
+          const distLeft = scrolled;
+          tl.to(ref.current, {
+            x: 0,
+            duration: 1.5,
+            onUpdate: () => {
+              const prog = (1 - tl.progress()) * distLeft;
+              dispatch(setScroll(-prog));
+            },
+            onComplete: () => {
+              setCheck(true);
+              scrollRef.current = 0;
+            },
+          });
+        } else if (scrolled < w * 2 - margin) {
+          setCheck(false);
+          const tl = gsap.timeline();
+          const distLeft = w - scrolled;
+          tl.to(ref.current, {
+            x: -w,
+            duration: 1.5,
+            onUpdate: () => {
+              const prog = tl.progress() * distLeft;
+              dispatch(setScroll(-(scrolled + prog)));
+            },
+            onComplete: () => {
+              setCheck(true);
+              scrollRef.current = -w;
+            },
+          });
+        }
         // console.log(scrolled, "please check here");
       }
     };
@@ -185,13 +250,15 @@ const TextCarousel = () => {
     };
   });
 
-
-
   return (
     <div className="w-[100%] h-[100vh] absolute z-10  flex overflow-hidden">
       <div className="min-w-[100vw] h-[100vh] items-center flex" ref={ref}>
         {arr.map((item, i) => {
-          return <TextItem title={item} key={i} id={i} check={check} />;
+          if (i === 2) {
+            return <TextItem title={item} key={i} id={i} check={check} />;
+          } else {
+            return <TextItem title={item} key={i} id={i} check={check} />;
+          }
         })}
       </div>
     </div>
