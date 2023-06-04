@@ -38,7 +38,7 @@ export const content = [
     {
       title: "Vision",
       className:
-        "text-[60px] shrink-0  pt-[300px] text-[#f7972b] font-bold  text-[#fff] fckin tracking-wide",
+        "text-[60px] shrink-0  pt-[300px] text-[#f7972b] font-bold  fckin tracking-wide",
     },
     {
       title:
@@ -60,12 +60,12 @@ export const content = [
     {
       title: "Values",
       className:
-        "text-[60px] mt-[30px] shrink-0 text-[#f7972b] font-bold leading-[80px] font-medium text-[#fff] fckin tracking-wide",
+        "text-[60px] mt-[30px] shrink-0 text-[#f7972b] font-bold leading-[80px] font-medium fckin tracking-wide",
     },
     {
       title: "Agile",
       className:
-        "text-[20px]  text-[#f7972b] shrink-0  font-medium text-[#fff] mt-[20px] fckin tracking-wide",
+        "text-[20px]  text-[#f7972b] shrink-0  font-medium mt-[20px] fckin tracking-wide",
     },
     {
       title: `We’re quick, nimble and adaptive to your needs, speed to market is essential and we
